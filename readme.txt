@@ -1,0 +1,1 @@
+to start the game first set the suffix '.py' to be opened by python then launch BNO_TCT.py
