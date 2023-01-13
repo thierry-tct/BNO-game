@@ -16,6 +16,7 @@ def ymax():
 	return int(round (HEIGH / YCONST))
 ########################
 def songs(key1) :
+    return "intro.wav"
 	
 #######################
 def clavier(input_,cur_key,index,prev_base,bankai) :  		# input est un entier correspondant a la sequence du clavier : ex : walk avant c'est 4
@@ -254,16 +255,16 @@ def computer(act_type,num_maxs,bankai) :
 	if act_type :
 		if bankai:
 			if num_maxs >= 1:
-				return range(41)[23:]+[42,44,45,46,48,49,51,52]
+				return list(range(41))[23:]+[42,44,45,46,48,49,51,52]
 			else :
-				return range(41)[23:]+[42,44,45,46,48,49,52]
+				return list(range(41))[23:]+[42,44,45,46,48,49,52]
 		else:
 			if num_maxs >= 3:
-				return range(41)[23:]+[42,44,45,46,47,48,49,50,51,52]
+				return list(range(41))[23:]+[42,44,45,46,47,48,49,50,51,52]
 			elif num_maxs >= 1:
-				return range(41)[23:]+[42,44,45,46,47,48,49,51,52]
+				return list(range(41))[23:]+[42,44,45,46,47,48,49,51,52]
 			else :
-				return range(41)[23:]+[42,44,45,46,47,48,49,52]
+				return list(range(41))[23:]+[42,44,45,46,47,48,49,52]
 	else :
 		return [4,5,6,7,8,9]+[11,12,13,14,15,15]
 ####################################

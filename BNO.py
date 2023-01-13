@@ -6,7 +6,11 @@ import kenpachi , ichigo , byakuya
 pygame.mixer.pre_init(22050, -16, 2, 4096)
 pygame.init()
 resolutions = pygame.display.list_modes()
-index = -2
+good_res = (720, 480)
+# look for most similar resolution to good_res
+index = -1
+while index > -len(resolutions) and not(resolutions[index][0] >= good_res[0] and resolutions[index][1] >= good_res[1]):
+    index -= 1
 SCREEN_WIDTH  = resolutions[index][0]
 SCREEN_HEIGHT = resolutions[index][1]
 windowSurface = pygame.display.set_mode((SCREEN_WIDTH,SCREEN_HEIGHT),pygame.RESIZABLE,32)
@@ -50,9 +54,9 @@ BNO_path = sys.argv[0][:i]
 
 ###################### CHOSE THE DISPLAY MODE ################
 
-WINDOW_MODE_ = pygame.image.load(os.path.join('data', BNO_path + '/images/backgrounds/window.png')).convert_alpha()
-FULLSCREEN_MODE_ = pygame.image.load(os.path.join('data', BNO_path + '/images/backgrounds/fullscreen.png')).convert_alpha()
-back = pygame.image.load(os.path.join('data', BNO_path + '/images/backgrounds/choose_back.png')).convert_alpha()
+WINDOW_MODE_ = pygame.image.load(os.path.join('data', BNO_path + '/images/backgrounds/WINDOW.PNG')).convert_alpha()
+FULLSCREEN_MODE_ = pygame.image.load(os.path.join('data', BNO_path + '/images/backgrounds/FULLSCREEN.PNG')).convert_alpha()
+back = pygame.image.load(os.path.join('data', BNO_path + '/images/backgrounds/CHOOSE_BACK.PNG')).convert_alpha()
 ok = 1
 full_s = 0
 windowSurface.blit(back,(-10,-10))
@@ -78,7 +82,7 @@ while ok:
 		if event.type == KEYUP:
 			if event.key == K_ESCAPE :
 				pygame.quit()
-           			sys.exit()
+				sys.exit()
 	pygame.display.update()
 pygame.quit()	
 pygame.mixer.pre_init(22050, -16, 2, 4096)
@@ -141,7 +145,7 @@ super_img2[1][0] = pygame.transform.scale(pygame.image.load(os.path.join('data',
 super_img2[1][1] = pygame.transform.scale(pygame.image.load(os.path.join('data', BNO_path + folder_path2  + 'super_img_r.png')).convert_alpha(),(SCREEN_WIDTH , SCREEN_HEIGHT))
 ################################# LOAD BACKGROUND
 background_folder_path = '/images/backgrounds/'
-back = pygame.image.load(os.path.join('data', BNO_path + background_folder_path + 'bleach.png')).convert_alpha()
+back = pygame.image.load(os.path.join('data', BNO_path + background_folder_path + 'Bleach.png')).convert_alpha()
 back_size = back.get_size()
 back = pygame.transform.scale(back,(BACK_IMAGE_LENGTH + 10,back_size[1]))
 back_size = back.get_size()
@@ -194,7 +198,8 @@ WINNER_Y , WINNER_X1 , WINNER_X2 = (SCREEN_HEIGHT - 59)/2 , 20 , SCREEN_WIDTH - 
 infini = pygame.image.load(os.path.join('data', BNO_path + background_folder_path + 'infini.png')).convert_alpha()
 INFINI_XY = [SCREEN_WIDTH/2 - 20 , 17]
 #
-ENERGY_UPLEFT = [(SCREEN_WIDTH - 594)/2, 10]
+ENERGY_MID_GAP = 594
+ENERGY_UPLEFT = [(SCREEN_WIDTH - ENERGY_MID_GAP)/2, 10]
 FIGHT_IMG1_X = 0
 FIGHT_IMG2_X = SCREEN_WIDTH - ENERGY_UPLEFT[0] 
 FIGHT_IMG_Y = 15
@@ -205,6 +210,7 @@ MAXI_LENGHT = 148
 bbbb = fight_name2.get_size()
 FIGHT_NAME1_X = 10
 FIGHT_NAME2_X = SCREEN_WIDTH - NAME_SCALE * bbbb[0] - 10
+#print("@DBG", ENERGY_UPLEFT[0], SCREEN_WIDTH, SCREEN_HEIGHT)
 fight_img1 = pygame.transform.scale(fight_img1 ,(ENERGY_UPLEFT[0] , 40))
 fight_img2 = pygame.transform.scale(fight_img2 ,(ENERGY_UPLEFT[0] , 40))
 fight_name2 = pygame.transform.scale(fight_name2 ,(NAME_SCALE * bbbb[0] , NAME_SCALE * bbbb[1]))
@@ -348,7 +354,7 @@ while True :
 					j = une_ligne - 1         # pour 2
 					namestring1 = ''
 					namestring2 = ''
-					back = pygame.image.load(os.path.join('data', BNO_path + '/images/backgrounds/choose_back.png')).convert_alpha()
+					back = pygame.image.load(os.path.join('data', BNO_path + '/images/backgrounds/CHOOSE_BACK.PNG')).convert_alpha()
 					while namestring1 == '' or namestring2 == '':
 						if pl1_active and cpu2_active and namestring2 == '':
 							j = random.choice(range(len(players_list)))
@@ -524,7 +530,7 @@ while True :
 					fight_name1 = pygame.transform.scale(fight_name1 ,(NAME_SCALE * bbbb[0] , NAME_SCALE * bbbb[1]))
 				# #####################################
 				# ##################  LOAD BACK ##############
-					back = pygame.image.load(os.path.join('data', BNO_path + background_folder_path + 'bleach.png')).convert_alpha()
+					back = pygame.image.load(os.path.join('data', BNO_path + background_folder_path + 'Bleach.png')).convert_alpha()
 					back = pygame.transform.scale(back,(BACK_IMAGE_LENGTH + 10,back_size[1]))
 					windowSurface.blit(back,back_upleft)
 					pygame.display.update()
@@ -541,7 +547,7 @@ while True :
 					player2_sound.play(0, 0 ,0)         #intro
 			else :
 				
-				before = time.clock()
+				before = time.perf_counter()
 				rect2 = player2[cur_action2[0]][cur_action2[1][index2]][1:3]
 				position1 = [0,SOL - (cur_action1[3][index1] + player1[cur_action1[0]][cur_action1[1][index1]][2])]
 				position2 = [SCREEN_WIDTH-RIGHT_SPACE - (rect2[0] - RIGHT_SPACE) , SOL - (cur_action2[3][index2] + player2[cur_action2[0]][cur_action2[1][index2]][2])]
@@ -572,8 +578,8 @@ while True :
 					num_maxs1 , num_maxs2  = 3 , 3
 					vict_num1 , vict_num2 = 0 , 0
 					time.sleep(4 * FPS)
-				after = time.clock()
-				time_offset = FPS - (after - before)              # 1000 parceque time.clock renvoi float en seconde or time.sleep use milliseconde
+				after = time.perf_counter()
+				time_offset = FPS - (after - before)              # 1000 parceque time.perf_counter renvoi float en seconde or time.sleep use milliseconde
 				if time_offset < 0.0 :
 					time_offset=0.0
 				time.sleep(time_offset + FPS)
@@ -586,7 +592,7 @@ while True :
 				index1 ,index2 = 0,0
 				key1,key2,cur_key1,cur_key2 = 2,2,2,2                            #stance
 				cur_action1 , cur_action2 = player1_name.clavier(key1,cur_key1,index1,0,bankai1[0]),player2_name.clavier(key2,cur_key2,index2,0,bankai2[0])
-			before = time.clock()
+			before = time.perf_counter()
 			rect2 = player2[cur_action2[0]][cur_action2[1][index2]][1:3]
 			position1 = [0,SOL - (cur_action1[3][index1] + player1[cur_action1[0]][cur_action1[1][index1]][2])]
 			position2 = [SCREEN_WIDTH-RIGHT_SPACE - (rect2[0] - RIGHT_SPACE) , SOL - (cur_action2[3][index2] + player2[cur_action2[0]][cur_action2[1][index2]][2])]
@@ -665,8 +671,8 @@ while True :
 				#############
 				event_list = pygame.event.get()              # vide la liste des events
 				# ########################
-			after = time.clock()
-			time_offset = FPS - (after - before)              # 1000 parceque time.clock renvoi float en seconde or time.sleep use milliseconde
+			after = time.perf_counter()
+			time_offset = FPS - (after - before)              # 1000 parceque time.perf_counter renvoi float en seconde or time.sleep use milliseconde
 			if time_offset < 0.0 :
 				time_offset=0.0
 			time.sleep(time_offset)
@@ -680,7 +686,7 @@ while True :
 		###
 		#before et after st use pour prendre le temps de calcul et offset le temps de pause pour un fps constant
 		###
-		before = time.clock()
+		before = time.perf_counter()
 		queue1[1][queue1[0]] = ''				#pour le cas ou rien n'est presse dc fo mettre des vides
 		queue2[1][queue2[0]] = ''				# lettre maj veut dire keydown , min veut dire up
 		
@@ -839,7 +845,7 @@ while True :
 						queue1[0] = (queue1[0] + 1) % QUEUE_ELEM_NUM		#cas  ou la touche pressee n'est pas use par le jeu
 	
 			#PLAYER 2
-			        if active_keyboard2 :                                 #test si on prend en compte le player2
+				if active_keyboard2 :                                 #test si on prend en compte le player2
 					if event.key == leftkey2 :
 						left2 = 1
 						queue2[1][queue2[0]] = 'A'
@@ -952,7 +958,7 @@ while True :
 										up1 = 1
 								
 							#player2	
-							        if active_keyboard2 :                                 #test si on prend en compte le player2
+								if active_keyboard2 :                                 #test si on prend en compte le player2
 									if event.key == leftkey2 :
 										left2 = 1
 									elif  event.key == rightkey2 :
@@ -1063,7 +1069,7 @@ while True :
 						queue1[0] = (queue1[0] + 1) % QUEUE_ELEM_NUM		#cas  ou la touche pressee n'est pas use par le jeu
 			
 			#PLAYER 2
-			        if active_keyboard2 :                                 #test si on prend en compte le player2
+				if active_keyboard2 :                                 #test si on prend en compte le player2
 					if event.key == leftkey2 :
 						left2 = 0
 						block2 = 0
@@ -1213,7 +1219,7 @@ while True :
 				else :
 					key1 = 2			#stance apres execution d'une piche 
 		#  #### important
-		        elif cur_key1 in [21,22] :
+			elif cur_key1 in [21,22] :
 				if live_val1 == 0 :
 					same_move1 = 1
 					prev_key1 = cur_key1
@@ -1382,7 +1388,7 @@ while True :
 					key2 = 2			#stance apres execution d'une piche 
 					
 			#  #### important
-		        elif cur_key2 in [21,22] :
+			elif cur_key2 in [21,22] :
 				if live_val2 == 0 :
 					same_move2 = 1
 					prev_key2 = cur_key2
@@ -1714,13 +1720,13 @@ while True :
 			position_left2 = position2
 			
 	################ Initialisation des x de puissance  ###########
-	        if mass1[0] :
+		if mass1[0] :
 			if mass1[1]['index'] == mass1[1]['start'] :
 				if direction1 == 1 :
 					mass1[1]['data'][4][0] += position_left1[0]
 				else :
 					mass1[1]['data'][4][0] = position_left1[0] + player1[cur_action1[0]][cur_action1[1][index1]][1] - mass1[1]['data'][4][0] - player1[mass1[1]['data'][0]][mass1[1]['data'][1] [mass1[1]['index'] - mass1[1]['start']]][1]
-				for _iter in range(len(mass1[1]['data'][4]))[1:] :
+				for _iter in list(range(len(mass1[1]['data'][4])))[1:] :
 					mass1[1]['data'][4][_iter] =   mass1[1]['data'][4][_iter - 1] + mass1[1]['data'][4][_iter] * direction1
 			mass1[1]['data'][4][mass1[1]['index'] - mass1[1]['start']] +=  back_upleft[0] - _b_up_l
 			position_mass1 = [ mass1[1]['data'][4][mass1[1]['index'] - mass1[1]['start']],mass1[1]['data'][3][mass1[1]['index'] - mass1[1]['start']] ]
@@ -1735,7 +1741,7 @@ while True :
 					mass2[1]['data'][4][0] += position_left2[0]
 				else :
 					mass2[1]['data'][4][0] = position_left2[0] + player2[cur_action2[0]][cur_action2[1][index2]][1] - mass2[1]['data'][4][0] - player2[mass2[1]['data'][0]][mass2[1]['data'][1] [mass2[1]['index'] - mass2[1]['start']]][1]
-				for _iter in range(len(mass2[1]['data'][4]))[1:] :
+				for _iter in list(range(len(mass2[1]['data'][4])))[1:] :
 					mass2[1]['data'][4][_iter] =  mass2[1]['data'][4][_iter - 1] + mass2[1]['data'][4][_iter] * direction2
 			mass2[1]['data'][4][mass2[1]['index'] - mass2[1]['start']] +=  back_upleft[0] - _b_up_l
 			position_mass2 = [ mass2[1]['data'][4][mass2[1]['index'] - mass2[1]['start']],mass2[1]['data'][3][mass2[1]['index'] - mass2[1]['start']] ] 
@@ -1746,7 +1752,7 @@ while True :
 				mass2 = [0,{}]
 	###############################################################
 	   # on traite mass player collision
-	        if mass1[0] :
+		if mass1[0] :
 			[commun , commun_middle_mass1] = collision.overlap(rect2 , position_left2 , rect_mass1 , position_mass1)
 			if commun[0] > MIN_X_AREA and commun[1] > MIN_Y_AREA and cur_action2[2][index2] not in [0,2]:    # cur_action car ne touche pas esquiver ,joueur a terre ...
 				touch_mass1 =  mass1[1]['data'][2][mass1[1]['index'] - mass1[1]['start']] 
@@ -2163,8 +2169,8 @@ while True :
 	
 	
 		################################## FPS
-		after = time.clock()
-		time_offset = FPS - (after - before)              # 1000 parceque time.clock renvoi float en seconde or time.sleep use milliseconde
+		after = time.perf_counter()
+		time_offset = FPS - (after - before)              # 1000 parceque time.perf_counter renvoi float en seconde or time.sleep use milliseconde
 		if time_offset < 0.0 :
 			time_offset=0.0
 		time.sleep(time_offset)

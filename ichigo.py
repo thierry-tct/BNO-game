@@ -15,6 +15,11 @@ JUMP_LENGHT = 10		#nombre d'images de jump... ici c 7 images 0.png ... 6.png uti
 def ymax():
 	return int(round (HEIGH / YCONST))
 
+########################
+def songs(key1) :
+    return "intro.wav"
+########################
+
 def clavier(input_,cur_key,index,prev_base,bankai) :  		# input est un entier correspondant a la sequence du clavier : ex : walk avant c'est 4
 				#format : [nom ds dico,[sequence d'affichage],[profondeurs],[y(qd ca monte),vitesse(augmentation de x)
 				# profondeur 0 veut dire intouchable . exemple teleport 
@@ -383,11 +388,11 @@ def computer(act_type,num_maxs,bankai) :
 			return [29,30,31,32,33,34,45,46]
 		else:
 			if num_maxs >= 3:
-				return [23,24,26] + range(41)[29:] + [42,44,45,46,47,48,49,50,51,52,53,54]
+				return [23,24,26] + list(range(41))[29:] + [42,44,45,46,47,48,49,50,51,52,53,54]
 			if num_maxs >= 1:
-				return [23,24,26] + range(41)[29:] + [42,44,45,46,47,48,49,50,52,53,54]
+				return [23,24,26] + list(range(41))[29:] + [42,44,45,46,47,48,49,50,52,53,54]
 			else :
-				return [23,24,26] + range(41)[29:]+[42,44,45,46,47,48,49,52,53,54]
+				return [23,24,26] + list(range(41))[29:]+[42,44,45,46,47,48,49,52,53,54]
 	else :
 		return [4,5,6,7,8,9]+[11,12,13,14,15,15]
 ####################################

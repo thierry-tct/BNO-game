@@ -3,7 +3,7 @@ Fighting Game
 
 This is a simple Fighting game written in python, using PyGame library
 
-To start the game, run BNO_TCT.py with Python
+To start the game, run BNO.py with Python
 
 ## Requirements
 Currently, this requires:
